@@ -8,10 +8,10 @@ var MOTTOS = ["No one can make you feel inferior without your consent.",
               "A man who flies from his fear may find that he has only taken a shortcut to meet it."]
 
 if(document.createStyleSheet) {
-  document.createStyleSheet('http://localhost:8000/crt.css');
+  document.createStyleSheet('https://cdn.rawgit.com/rndviktor2devman/34_timemachine/d6729da9/crt.css');
 }
 else {
-  var styles = "@import url(' http://localhost:8000/crt.css ');";
+  var styles = "@import url(' https://cdn.rawgit.com/rndviktor2devman/34_timemachine/d6729da9/crt.css ');";
   var newSS=document.createElement('link');
   newSS.rel='stylesheet';
   newSS.href='data:text/css,'+escape(styles);
