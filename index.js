@@ -1,5 +1,24 @@
 var TIMEOUT_IN_SECS = 3 * 60
-var TEMPLATE = '<h1><span class="js-timer-minutes">00</span>:<span class="js-timer-seconds">00</span></h1>'
+
+var MOTTOS = ["No one can make you feel inferior without your consent.",
+              "This too, shall pass.",
+              "Keep your eyes on the stars and your feet on the ground.",
+              "The only person you should try to be better than is the person you were yesterday.",
+              "Life's too mysterious to take too serious.",
+              "A man who flies from his fear may find that he has only taken a shortcut to meet it."]
+
+if(document.createStyleSheet) {
+  document.createStyleSheet('http://localhost:8000/crt.css');
+}
+else {
+  var styles = "@import url(' http://localhost:8000/crt.css ');";
+  var newSS=document.createElement('link');
+  newSS.rel='stylesheet';
+  newSS.href='data:text/css,'+escape(styles);
+  document.getElementsByTagName("head")[0].appendChild(newSS);
+}
+
+var TEMPLATE = '<h1 class="crt"><span class="js-timer-minutes">00</span>:<span class="js-timer-seconds">00</span></h1>'
 
 function padZero(number){
   return ("00" + String(number)).slice(-2);
@@ -56,7 +75,7 @@ class TimerWidget{
     // adds HTML tag to current page
     this.timerContainer = document.createElement('div')
 
-    this.timerContainer.setAttribute("style", "height: 100px;")
+    this.timerContainer.setAttribute("style", "position: fixed; z-index: 1; top:50px;")
     this.timerContainer.innerHTML = TEMPLATE
 
     rootTag.insertBefore(this.timerContainer, rootTag.firstChild)
@@ -83,14 +102,25 @@ class TimerWidget{
 function main(){
 
   var timer = new Timer(TIMEOUT_IN_SECS)
-  var timerWiget = new TimerWidget()
+  var timerWidget = new TimerWidget()
   var intervalId = null
 
-  timerWiget.mount(document.body)
+  timerWidget.mount(document.body)
+
+  function randomiseAndShow() {
+    var message = (MOTTOS[Math.floor(Math.random() * MOTTOS.length)]);
+    window.alert(message);
+  }
 
   function handleIntervalTick(){
     var secsLeft = timer.calculateSecsLeft()
-    timerWiget.update(secsLeft)
+    if(secsLeft === 0){
+      randomiseAndShow();
+      timer = new Timer(TIMEOUT_IN_SECS);
+      secsLeft = timer.calculateSecsLeft();
+      timer.start();
+    }
+    timerWidget.update(secsLeft)
   }
 
   function handleVisibilityChange(){

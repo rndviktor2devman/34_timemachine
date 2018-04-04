@@ -2,6 +2,8 @@
 
 This project helps to control time was spent on sites. It requires special extension for Chrome browser.
 
+![](widget_screenshot.PNG)
+
 # Installing
 
 Install extension for Chrome browser [Custom JavaScript for websites](https://chrome.google.com/webstore/detail/custom-javascript-for-web/poakhlngfciodnhlhhgnaaelnpjljija).
