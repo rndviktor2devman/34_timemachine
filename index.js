@@ -8,10 +8,10 @@ var MOTTOS = ["No one can make you feel inferior without your consent.",
               "A man who flies from his fear may find that he has only taken a shortcut to meet it."]
 
 if(document.createStyleSheet) {
-  document.createStyleSheet('https://cdn.rawgit.com/rndviktor2devman/34_timemachine/d6729da9/crt.css');
+  document.createStyleSheet('https://rawgit.com/rndviktor2devman/34_timemachine/d6729da9/crt.css');
 }
 else {
-  var styles = "@import url(' https://cdn.rawgit.com/rndviktor2devman/34_timemachine/d6729da9/crt.css ');";
+  var styles = "@import url(' https://rawgit.com/rndviktor2devman/34_timemachine/d6729da9/crt.css ');";
   var newSS=document.createElement('link');
   newSS.rel='stylesheet';
   newSS.href='data:text/css,'+escape(styles);
@@ -22,6 +22,38 @@ var TEMPLATE = '<h1 class="crt"><span class="js-timer-minutes">00</span>:<span c
 
 function padZero(number){
   return ("00" + String(number)).slice(-2);
+}
+
+function isNumeric(val) {
+    return !isNaN(parseFloat(val)) && isFinite(val);
+}
+
+function findHighestZIndex() {
+    let queryObject = document.querySelectorAll('*');
+    let childNodes = Object.keys(queryObject).map(key => queryObject[key]);
+    let highest = 0;
+
+    childNodes.forEach((node) => {
+      // Get the calculated CSS z-index value.
+      let cssStyles = document.defaultView.getComputedStyle(node);
+      let cssZIndex = cssStyles.getPropertyValue('z-index');
+
+      // Get any inline z-index value.
+      let inlineZIndex = node.style.zIndex;
+
+      // Coerce the values as integers for comparison.
+      cssZIndex = isNumeric(cssZIndex) ? parseInt(cssZIndex, 10) : 0;
+      inlineZIndex = isNumeric(inlineZIndex) ? parseInt(inlineZIndex, 10) : 0;
+
+      // Take the highest z-index for this element, whether inline or from CSS.
+      let currentZIndex = cssZIndex > inlineZIndex ? cssZIndex : inlineZIndex;
+
+      if ((currentZIndex > highest)) {
+        highest = currentZIndex;
+      }
+    });
+
+    return highest;
 }
 
 class Timer{
@@ -75,7 +107,9 @@ class TimerWidget{
     // adds HTML tag to current page
     this.timerContainer = document.createElement('div')
 
-    this.timerContainer.setAttribute("style", "position: fixed; z-index: 1; top:50px;")
+    var nextZindex = findHighestZIndex() + 1;
+    var elementStyle = "position: fixed; z-index: " + nextZindex + "; top:50px;"
+    this.timerContainer.setAttribute("style", elementStyle)
     this.timerContainer.innerHTML = TEMPLATE
 
     rootTag.insertBefore(this.timerContainer, rootTag.firstChild)
