@@ -9,7 +9,7 @@ This project helps to control time was spent on sites. It requires special exten
 Install extension for Chrome browser [Custom JavaScript for websites](https://chrome.google.com/webstore/detail/custom-javascript-for-web/poakhlngfciodnhlhhgnaaelnpjljija).
 
 Open configuration of [cjs](https://chrome.google.com/webstore/detail/custom-javascript-for-web/poakhlngfciodnhlhhgnaaelnpjljija) browser extension on the site you want to controll. Click on the link "your own external scripts", add path
-https://cdn.rawgit.com/rndviktor2devman/34_timemachine/99cf4489/index.js
+https://rawgit.com/rndviktor2devman/34_timemachine/5db2c2fa/index.js
 
 After enabling the script you will see on top-left corner of the screen the timer(see screenshot), which shows time left before alarm shown. Alarm shows some motivation message and means you should go to work! :)
 
